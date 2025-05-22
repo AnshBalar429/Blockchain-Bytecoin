@@ -12,4 +12,27 @@ public class Bytecoin {
             System.out.println(block.hash);
         }
     }
+
+    public static boolean isChainValid() {
+        Block currentBlock;
+        Block previousBlock;
+
+        for (int i = 1; i < blockchain.size() - 1; i++) {
+            currentBlock = blockchain.get(i);
+            previousBlock = blockchain.get(i - 1);
+
+            if (!currentBlock.hash.equals(currentBlock.calculateHash())) {
+                System.out.println("Current Block's Hashes are not equal");
+                return false;
+            }
+
+            if (!previousBlock.hash.equals(currentBlock.previousHash)) {
+                System.out.println("Previous Block's Hashes are not equal");
+                return false;
+            }
+        }
+
+        return true;
+
+    }
 }
