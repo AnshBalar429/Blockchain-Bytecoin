@@ -5,10 +5,11 @@ public class Block {
     public String previousHash;
     public String data;
     public Long timestamp;
+    public int nonce;
 
     public String calculateHash() {
         String hash = StringUtil.applySHA256(this.previousHash
-                + Long.toString(this.timestamp) + this.data);
+                + Long.toString(this.timestamp) + Integer.toString(nonce) + this.data);
         return hash;
     }
 
