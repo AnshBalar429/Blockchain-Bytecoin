@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Bytecoin {
     public static ArrayList<Block> blockchain = new ArrayList<Block>();
+    public static int difficulty = 5;
 
     public static void main(String[] args) {
         blockchain.add(new Block("This is the first block", "0"));
@@ -16,6 +17,7 @@ public class Bytecoin {
     public static boolean isChainValid() {
         Block currentBlock;
         Block previousBlock;
+        String hashTarget = new String(new char[difficulty]).replace('\0', '0');
 
         for (int i = 1; i < blockchain.size() - 1; i++) {
             currentBlock = blockchain.get(i);
@@ -28,6 +30,12 @@ public class Bytecoin {
 
             if (!previousBlock.hash.equals(currentBlock.previousHash)) {
                 System.out.println("Previous Block's Hashes are not equal");
+                return false;
+            }
+
+            //checking if hash is solved
+            if (!currentBlock.hash.substring(0, difficulty).equals(hashTarget)) {
+                System.out.println("This block is not mined");
                 return false;
             }
         }
